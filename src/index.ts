@@ -1,14 +1,9 @@
 import { CsvFileReader } from './CsvFileReader';
+import { MatchResult } from './MatchResult';
 
 // create a new variable based on a new class of CsvFileReader Class to use the football.csv file
 const reader = new CsvFileReader('football.csv');
 reader.read();
-// purpose of an enum of mainly to signal other developers this is a collectiong of closely related values
-enum MatchResult {
-  homeWin = 'H',
-  awayWin = 'A',
-  draw = 'D',
-}
 
 let manUnitedWins = 0;
 
