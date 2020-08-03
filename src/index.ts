@@ -1,23 +1,22 @@
-import fs from 'fs';
+import { CsvFileReader } from './CsvFileReader';
 
-// use this to read any type of file
-// encoding says to return a string
-const matches = fs
-  .readFileSync('football.csv', { encoding: 'utf-8' })
-  .split('\n')
-  .map((row: string): string[] => row.split(','));
+// create a new variable based on a new class of CsvFileReader Class to use the football.csv file
+const reader = new CsvFileReader('football.csv');
+reader.read();
+// purpose of an enum of mainly to signal other developers this is a collectiong of closely related values
+enum MatchResult {
+  homeWin = 'H',
+  awayWin = 'A',
+  draw = 'D',
+}
 
 let manUnitedWins = 0;
-const homeWin = 'H';
-const awayWin = 'A';
-const draw = 'D';
 
-// BAD VERSION OF CODE
-// iterate over strings from the football.csv file containing Man United and add to the manUnitedWins if match[5] contains H or A
-for (let match of matches) {
-  if (match[1] === 'Man United' && match[5] === homeWin) {
+// Iterate over the imported class's data array created in CsvFileReader
+for (let match of reader.data) {
+  if (match[1] === 'Man United' && match[5] === MatchResult.homeWin) {
     manUnitedWins++;
-  } else if (match[2] === 'Man United' && match[5] === awayWin) {
+  } else if (match[2] === 'Man United' && match[5] === MatchResult.awayWin) {
     manUnitedWins++;
   }
 }
