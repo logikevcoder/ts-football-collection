@@ -1,8 +1,8 @@
-import { CsvFileReader } from './CsvFileReader';
+import { MatchReader } from './MatchReader';
 import { MatchResult } from './MatchResult';
 
 // create a new variable based on a new class of CsvFileReader Class to use the football.csv file
-const reader = new CsvFileReader('football.csv');
+const reader = new MatchReader('football.csv');
 reader.read();
 
 let manUnitedWins = 0;

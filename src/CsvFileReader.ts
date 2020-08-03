@@ -1,33 +1,19 @@
 import fs from 'fs';
-import { dateStringToDate } from './utils';
 import { MatchResult } from './MatchResult';
 
-type MatchData = [Date, string, string, number, number, MatchResult, string];
-
-export class CsvFileReader {
+export abstract class CsvFileReader<T> {
   // now points to MatchData which is an array itself of arrays as above [][]
-  data: MatchData[] = [];
+  data: T[] = [];
 
   constructor(public filename: string) {}
+
+  abstract mapRow(row: string[]): T;
 
   read(): void {
     this.data = fs
       .readFileSync(this.filename, { encoding: 'utf-8' })
       .split('\n')
       .map((row: string): string[] => row.split(','))
-      .map(
-        (row: string[]): MatchData => {
-          return [
-            dateStringToDate(row[0]),
-            row[1],
-            row[2],
-            parseInt(row[3]),
-            parseInt(row[4]),
-            // type assertion to override TS default behavior
-            row[5] as MatchResult,
-            row[6],
-          ];
-        }
-      );
+      .map(this.mapRow);
   }
 }
